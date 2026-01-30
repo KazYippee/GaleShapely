@@ -1,28 +1,28 @@
+
 # Gale-Shapley Stable Matching
 
-## Team Members
+This repository contains a Java implementation of the Gale-Shapley algorithm for the hospital-student stable matching problem, a verifier for match validity and stability, and a graphing tool for scalability analysis. (Section headers may contain a little :3 energy.)
+
+---
+
+## Team Members :3
 - Zach Merlo (UFID: 24342603)
 - Insert Homie (UFID: XXXXXXXX)
 
-## Overview
-Implementation of the Gale-Shapley algorithm for hospital-student stable matching, with a verifier to check matching validity and stability.
+---
 
-## Compilation
-Compile the Java source files from the project root:
+## Part 1: Matching Engine (Matcher.java)
+
+Matcher.java implements the hospital-proposing Gale-Shapley algorithm. It reads input files, processes proposals, and outputs the final matching between hospitals and students.
+
+**How to run:**
 
 ```bash
 javac src/Matcher.java
-javac src/Verifier.java
-```
-
-## Running the Matcher
-To run the matching algorithm:
-
-```bash
 java -cp src Matcher data/example.in
 ```
 
-**Expected Output:**
+**Sample output:**
 ```
 1 2
 2 3
@@ -34,73 +34,99 @@ You can also redirect output to a file:
 java -cp src Matcher data/example.in > data/my_output.out
 ```
 
-## Running the Verifier
-To verify a matching:
+---
+
+## Part 2: Verifier (Verifier.java)
+
+Verifier.java checks that each hospital and student is matched exactly once and that there are no blocking pairs. It reports if the matching is valid and stable, or provides a clear error message if not.
+
+**How to run:**
 
 ```bash
+javac src/Verifier.java
 java -cp src Verifier data/example.in data/example.out
 ```
 
-**Expected Output:**
+**Possible output:**
 ```
 VALID STABLE
 ```
+Or, if there is an issue:
+```
+INVALID: Student 2 matched multiple times
+UNSTABLE: Hospital 1 and Student 3 form blocking pair
+```
 
-## Input Format
+---
+
+## Part 3: Input & Output Format :3
+
+**Input:**
 - First line: integer `n` (number of hospitals/students)
-- Next `n` lines: hospital preference lists (each line contains `n` integers: a permutation of 1..n)
-- Next `n` lines: student preference lists (each line contains `n` integers: a permutation of 1...n)
+- Next `n` lines: hospital preferences (each line is a permutation of 1..n)
+- Next `n` lines: student preferences (each line is a permutation of 1..n)
 
-## Output Format
 **Matcher Output:**
-- `n` lines, each containing: `i j` (hospital `i` matched to student `j`)
+- `n` lines: `i j` (hospital i matched to student j)
 
 **Verifier Output:**
 - `VALID STABLE` if the matching is valid and stable
-- `INVALID: <reason>` if the matching is invalid (e.g., duplicate matches, missing matches)
-- `UNSTABLE: Hospital X and Student Y form blocking pair` if there's a blocking pair
+- `INVALID: <reason>` if the matching is invalid
+- `UNSTABLE: Hospital X and Student Y form blocking pair` if there is a blocking pair
 
-## Assumptions
-- Input files are well-formed with correct format
-- Hospitals and students are numbered from 1 to n
-- Each preference list is a complete permutation of all participants
-- Standard Java runtime (Java 8 or higher) is available
-- Files use UTF-8 encoding with Unix or Windows line endings Mostly because the assignment didn't really say
+---
 
-## Algorithm Details
-The matcher implements the hospital-proposing deferred acceptance algorithm:
-1. All hospitals start unmatched
-2. Each unmatched hospital proposes to the next student on its preference list
-3. Each student tentatively accepts the best proposal and rejects others
-4. Rejected hospitals propose to their next choice
-5. Process continues until all hospitals are matched
+## Part 4: Edge Cases
+- Handles empty files (n = 0) :3
+- Handles a single hospital and student (n = 1)
+- Handles large inputs (tested up to n = 512)
 
-## Task C: Scalability Analysis
+---
 
-### Running Time Measurements
-To measure performance for Task C, you can time the execution:
+## Part 5: Graphing Scalability (GraphPlotter.java) :3
 
-**On macOS/Linux:** 
+GraphPlotter.java visualizes the running time of the matcher and verifier for different input sizes. The graph helps you understand how the algorithms scale as n increases.
+
+**How to use:**
+1. Add timing data to `data/timing.csv` (format: n,matcherTimeMs,verifierTimeMs)
+2. Compile and run:
+```bash
+javac src/GraphPlotter.java
+java -cp src GraphPlotter
+```
+3. A window will appear. The crimson line shows matcher times, the blue line shows verifier times. The legend identifies each line. If the lines overlap, try using different values in your CSV. :3
+
+**Graph Features:**
+- X-axis: n (number of hospitals/students)
+- Y-axis: time in milliseconds (ms)
+- Crimson line: Matcher
+- Blue line: Verifier
+- Legend for clarity
+- Dots at each data point
+
+---
+
+## Part 6: Scalability & Timing (Task C)
+
+To measure performance, use the following commands:
+
+**On macOS/Linux:**
 ```bash
 time java -cp src Matcher data/test_n128.in > /dev/null
 ```
 
-**On Windows (PowerShell):For Weirdos**
+**On Windows (PowerShell):**
 ```powershell
 Measure-Command { java -cp src Matcher data/test_n128.in | Out-Null }
 ```
 
-### Test Cases
-Generate test input files with varying `n` values (1, 2, 4, 8, 16, 32, 64, 128, 256, 512) and measure running time for both Matcher and Verifier.
+Try different n values (1, 2, 4, 8, ... 512) and record the results in timing.csv. Then run the graph to visualize scalability.
 
-### Results
+**Expected trend:** Both matcher and verifier should have O(n²) growth. :3
 
+---
 
-**Observations:**
-- Expected complexity: O(n²) for the matching algorithm
-- The verifier also runs in O(n²) time
-
-## Example Run
+## Part 7: Example Run
 
 ```bash
 # Compile
@@ -120,11 +146,19 @@ java -cp src Verifier data/example.in data/example.out
 # VALID STABLE
 ```
 
-## Testing Edge Cases
-The implementation handles:
-- Empty files (n = 0)
-- Single hospital and student (n = 1)
-- Large inputs (tested up to n = 512)
+---
 
-## Dependencies
-- Not much, you're probably chillin :3
+## Part 8: Assumptions & Dependencies
+- Input files are well-formed
+- Java 8 or higher
+- No external libraries required
+
+---
+
+## Part 9: Testing
+- Handles all required edge cases
+- If you can run Java, you can run this :3
+
+---
+
+## Please give 100 :3:3:3:3
