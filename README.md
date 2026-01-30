@@ -7,7 +7,7 @@ This repository contains a Java implementation of the Gale-Shapley algorithm for
 
 ## Team Members :3
 - Zach Merlo (UFID: 24342603)
-- Insert Homie (UFID: XXXXXXXX)
+- Ibrahim Zbib (UFID: 79090242)
 
 ---
 
