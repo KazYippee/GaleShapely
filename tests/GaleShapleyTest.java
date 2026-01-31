@@ -173,4 +173,60 @@ public class GaleShapleyTest {
         new File(outputPath).delete();
     }
 
+    @Test
+    public void testTotalConflictPreferences() throws Exception {
+        //scenario: Worst Case Conflict
+        // Every Hospital wants Student 1 first
+        // Every Student wants Hospital 1 first
+        //this forces the maximum number of rejections and re-proposals
+        // Expected Result: A valid stable match must still be found (H1-S1, H2-S2)
+        String content = "2\n" +
+                         "1 2\n" + 
+                         "1 2\n" + 
+                         "1 2\n" + 
+                         "1 2";    
+
+        String inputPath = "tests/conflict.in";
+        String outputPath = "tests/conflict.out";
+        writeStringToFile(inputPath, content);
+
+        Matcher.main(new String[]{inputPath});
+        String matcherOutput = outContent.toString();
+        writeStringToFile(outputPath, matcherOutput);
+        
+        outContent.reset();
+
+        Verifier.main(new String[]{inputPath, outputPath});
+        String verifierOutput = outContent.toString();
+
+        assertTrue("Verifier should still find a stable match even with conflicts", 
+            verifierOutput.contains("VALID STABLE"));
+        
+        new File(inputPath).delete();
+        new File(outputPath).delete();
+    }
+
+    @Test
+    public void testVerifierDetectsFormatError() throws Exception {
+        //scenario: Malformed Output File.
+        // the Matcher output file contains garbage text instead of pairs
+        //the Verifier should catch this and not crash or report Valid
+        String inputContent = "2\n1 2\n2 1\n1 2\n2 1";
+        String garbageContent = "This is not a matching"; 
+
+        String inputPath = "tests/malformed.in";
+        String outputPath = "tests/malformed.out";
+        
+        writeStringToFile(inputPath, inputContent);
+        writeStringToFile(outputPath, garbageContent);
+
+        Verifier.main(new String[]{inputPath, outputPath});
+        String output = outContent.toString();
+
+        assertFalse("Verifier should reject malformed file", output.contains("VALID STABLE"));
+        
+        new File(inputPath).delete();
+        new File(outputPath).delete();
+    }
+
 }

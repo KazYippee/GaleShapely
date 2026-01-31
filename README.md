@@ -195,10 +195,10 @@ java -cp src Verifier data/example.in data/example.out
 The expected output should be :
 ```
 JUnit version 4.13.2
-.....
-Time: 0.008
+.......
+Time: 0.009
 
-OK (5 tests)
+OK (7 tests)
 ```
 
 ## Please give 100 :3:3:3:3
