@@ -155,10 +155,50 @@ java -cp src Verifier data/example.in data/example.out
 
 ---
 
-## Part 9: Testing
+## Part 9: Testing 
 - Handles all required edge cases
 - If you can run Java, you can run this :3
 
+- Below are the steps required to install the necessary dependencies, compile tests, and finally run them
+
+### Dependencies
+- paste the following commands into your terminal:
+
+``` mkdir -p lib```
+
+```curl -o lib/junit-4.13.2.jar https://repo1.maven.org/maven2/junit/junit/4.13.2/junit-4.13.2.jar ```
+
+```curl -o lib/hamcrest-core-1.3.jar https://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar```
+
+### Compile
+- put this into your terminal after installing dependenceis to compile
+
+#### macOS / Linux
+
+```javac -cp .:lib/junit-4.13.2.jar:src tests/GaleShapleyTest.java```
+
+#### Windows
+
+```javac -cp ".;lib/junit-4.13.2.jar;src" tests/GaleShapleyTest.java```
+
 ---
+
+### Run
+#### Mac/Linux
+
+```java -cp .:lib/junit-4.13.2.jar:lib/hamcrest-core-1.3.jar:src:tests org.junit.runner.JUnitCore GaleShapleyTest```
+
+#### Windows
+
+```java -cp ".;lib/junit-4.13.2.jar;lib/hamcrest-core-1.3.jar;src;tests" org.junit.runner.JUnitCore GaleShapleyTest```
+
+The expected output should be :
+```
+JUnit version 4.13.2
+.....
+Time: 0.008
+
+OK (5 tests)
+```
 
 ## Please give 100 :3:3:3:3
