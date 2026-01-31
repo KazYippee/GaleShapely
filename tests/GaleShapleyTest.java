@@ -53,7 +53,6 @@ public class GaleShapleyTest {
         //clear stream for the next runn
         outContent.reset(); 
 
-        //run Verifier
         Verifier.main(new String[]{inputPath, outputPath});
         String verifierOutput = outContent.toString();
 
@@ -94,7 +93,7 @@ public class GaleShapleyTest {
 
     @Test
     public void testEdgeCaseZeroN() throws Exception {
-        //if n=0, the program shouldn't crash.
+        //if n=0, the program shouldn't crash
         String content = "0";
         String inputPath = "tests/n0_test.in";
         String outputPath = "tests/n0_test.out";
